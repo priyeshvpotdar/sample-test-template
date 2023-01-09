@@ -1,1 +1,1 @@
-# sample-test-template
+# Harbor sample test
