@@ -1,4 +1,4 @@
-const Harbor = require("@beam-me-up/harbor");
+const Harbor = require("@harbor-xyz/harbor");
 const { expect } = require("chai");
 
 describe("Sample test", () => {
