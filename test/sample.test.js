@@ -16,6 +16,8 @@ describe("Sample test", () => {
       baseUrl: "https://develop-api.tech.goharbor.com",
     });
 
+    // Initialize your repository below this line!
+
     // Authenticate below this line!
 
     // Apply your configuration below this line!
