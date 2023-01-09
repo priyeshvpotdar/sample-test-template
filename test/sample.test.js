@@ -26,5 +26,4 @@ describe("Sample test", () => {
   it("Check if the Testnet exists", async () => {});
   it("Check that there is only one chain (Ethereum)", async () => {});
   it("Check that there are only 3 wallets in your Ethereum chain", async () => {});
-  it("Check that each wallet contains exactly 10,000 ETH", async () => {});
 });
