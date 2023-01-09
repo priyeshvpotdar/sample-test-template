@@ -6,8 +6,6 @@ describe("Sample test", () => {
   let testnet;
   let testnetName = "sample-template-to-test";
 
-  const TIMEOUT = 900000;
-
   beforeAll(async () => {
     // Fill the Harbor object in with your keys!
     harbor = new Harbor({
@@ -20,7 +18,7 @@ describe("Sample test", () => {
 
     // Apply your configuration below this line!
     
-  }, TIMEOUT);
+  });
 
   // Fill in each of these tests!
   it("Check if the Testnet exists", async () => {});
