@@ -1,8 +1,18 @@
-# Harbor Sample Test
+# Harbor Sample Test Template
 
-This is a sample project that shows how to work with the `harbor` cli.
+This is a starter template that you need to download for your `Sample Test` SDK Tutorial. Follow the steps before continuing the tutorial.
 
-After you have your API key downloaded in `~/.harbor` - run
+## Installation
+Run either:
 
-`harbor build`
-`harbor run <testnet_image_id> --name <unique_testnet_name>`
+```
+yarn install
+```
+
+or:
+
+```
+npm install
+```
+
+Depending on the package manager of your choice. Afterwards, get your credentials ready before you start the tutorial!
