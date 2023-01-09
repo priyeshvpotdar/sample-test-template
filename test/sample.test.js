@@ -4,7 +4,7 @@ describe("Sample test", () => {
   // Variables we can access in every test
   let harbor;
   let testnet;
-  let testnetName = "sample-test";
+  let testnetName = "sample-harbor-test";
 
   const TIMEOUT = 900000;
 
