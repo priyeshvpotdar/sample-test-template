@@ -15,10 +15,10 @@ describe("Sample test", () => {
       projectKey: "",
       baseUrl: "https://develop-api.tech.goharbor.com",
     });
+    
+    // Authenticate below this line!
 
     // Initialize your repository below this line!
-
-    // Authenticate below this line!
 
     // Apply your configuration below this line!
     
