@@ -18,8 +18,6 @@ describe("Sample test", () => {
     
     // Authenticate below this line!
 
-    // Initialize your repository below this line!
-
     // Apply your configuration below this line!
     
   }, TIMEOUT);
