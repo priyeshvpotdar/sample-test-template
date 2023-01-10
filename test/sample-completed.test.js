@@ -35,7 +35,7 @@ describe("Sample test", () => {
       },
       testnetName
     );
-  }, 900000);
+  }, 300000);
 
   // Fill in each of these tests!
   it("Check if the Testnet is running", async () => {
