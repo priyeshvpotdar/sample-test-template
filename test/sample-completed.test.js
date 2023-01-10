@@ -44,13 +44,13 @@ describe("Sample test", () => {
   it("Check that there is only one chain (Ethereum)", async () => {
     const chains = await testnet.chains();
     expect(chains.length).to.be.equal(1);
-    const ethereumChain;
+    let ethereumChain;
     for (let i = 0; i < chains.length; i++) {
       if (chains[i].chain == "ethereum") {
         ethereumChain = chains[i];
       }
     }
-expect(ethereumChain.chain).to.be.equal("ethereum");
+    expect(ethereumChain.chain).to.be.equal("ethereum");
   });
   it("Check that there are only 3 wallets in your Ethereum chain", async () => {
     const chains = await testnet.chains();
