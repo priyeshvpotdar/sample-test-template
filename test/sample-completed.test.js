@@ -11,8 +11,7 @@ describe("Sample test", () => {
     // Fill the Harbor object in with your keys!
     harbor = new Harbor({
       userKey: "cFeJWnDwQFVTSF2AabJmW5",
-      projectKey: "fPMeKGPUfyBTCoqtXmv3G4",
-      baseUrl: "https://develop-api.tech.goharbor.com",
+      projectKey: "fPMeKGPUfyBTCoqtXmv3G4"
     });
 
     // Authenticate below this line!
