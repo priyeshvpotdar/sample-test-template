@@ -15,9 +15,7 @@ describe("Sample test", () => {
     });
     
     // Authenticate below this line!
-
-    // Initialize below this line! (skip if you already have made a project)
-
+    
     // Apply your configuration below this line!
     
   });
