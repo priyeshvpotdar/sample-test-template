@@ -13,15 +13,15 @@ describe("Sample test", () => {
       projectKey: "",
       baseUrl: "https://develop-api.tech.goharbor.com",
     });
-    
+
     // Authenticate below this line!
-    
+
     // Apply your configuration below this line!
-    
   });
 
   // Fill in each of these tests!
   it("Check if the Testnet exists", async () => {});
   it("Check that there is only one chain (Ethereum)", async () => {});
   it("Check that there are only 3 wallets in your Ethereum chain", async () => {});
+  it("Check that the balances of both wallets and chains exist", async () => {});
 });

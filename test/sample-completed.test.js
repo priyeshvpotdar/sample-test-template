@@ -10,30 +10,31 @@ describe("Sample test", () => {
   beforeAll(async () => {
     // Fill the Harbor object in with your keys!
     harbor = new Harbor({
-      userKey: "cFeJWnDwQFVTSF2AabJmW5",
-      projectKey: "fPMeKGPUfyBTCoqtXmv3G4"
+      userKey: "9S7NYNRjgy6Xaw5eSdaGqg",
+      projectKey: "sJHqS5q4B2jb6TwDP6pHm5",
     });
 
     // Authenticate below this line!
     await harbor.authenticate();
 
     // Apply your configuration below this line!
-    testnet = await harbor.apply(
-      {
-        chains: [
-          {
-            chain: "ethereum",
-            config: {
-              artifactsPath: "./artifacts",
-              deploy: { scripts: "./deploy" },
-            },
-            wallets: [],
-            tag: "v1",
-          },
-        ],
-      },
-      testnetName
-    );
+    // testnet = await harbor.apply(
+    //   {
+    //     chains: [
+    //       {
+    //         chain: "ethereum",
+    //         config: {
+    //           artifactsPath: "./artifacts",
+    //           deploy: { scripts: "./deploy" },
+    //         },
+    //         wallets: [],
+    //         tag: "v1",
+    //       },
+    //     ],
+    //   },
+    //   testnetName
+    // );
+    testnet = await harbor.testnet("sample-template-to-test");
   }, 300000);
 
   // Fill in each of these tests!
@@ -60,4 +61,18 @@ describe("Sample test", () => {
     }
     expect(accountsCount).to.be.equal(3);
   }, 50000);
+  it("Check that the balances of both wallets and chains exist", async () => {
+    const chains = await testnet.chains();
+    const accounts = await chains[0].accounts();
+    for (let i = 0; i < accounts.length; i++) {
+      console.log("Account #:", i + 1);
+      console.log("Type of account: ", accounts[i].type);
+      console.log("Address: ", accounts[i].address);
+      for (let j = 0; j < accounts[i].balances.length; j++) {
+        console.log("Symbol: ", accounts[i].balances[j].symbol);
+        expect(accounts[i].balances[j].amount).to.exist;
+        console.log("Balance: ", accounts[i].balances[j].amount);
+      }
+    }
+  });
 });
