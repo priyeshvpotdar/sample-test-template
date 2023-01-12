@@ -10,8 +10,8 @@ describe("Sample test", () => {
   beforeAll(async () => {
     // Fill the Harbor object in with your keys!
     harbor = new Harbor({
-      userKey: "9S7NYNRjgy6Xaw5eSdaGqg",
-      projectKey: "sJHqS5q4B2jb6TwDP6pHm5",
+      userKey: "",
+      projectKey: "",
     });
 
     // Authenticate below this line!
