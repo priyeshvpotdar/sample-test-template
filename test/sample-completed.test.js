@@ -19,7 +19,9 @@ describe("Sample test", () => {
 
     // Authenticate below this line!
     await harbor.authenticate();
-
+    console.log(
+      "Deploying your contracts ... This may take a few minutes. Please stand by."
+    );
     // Apply your configuration below this line!
     testnet = await harbor.apply(
       {
