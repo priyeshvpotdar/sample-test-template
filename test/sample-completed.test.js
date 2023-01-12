@@ -18,23 +18,22 @@ describe("Sample test", () => {
     await harbor.authenticate();
 
     // Apply your configuration below this line!
-    // testnet = await harbor.apply(
-    //   {
-    //     chains: [
-    //       {
-    //         chain: "ethereum",
-    //         config: {
-    //           artifactsPath: "./artifacts",
-    //           deploy: { scripts: "./deploy" },
-    //         },
-    //         wallets: [],
-    //         tag: "v1",
-    //       },
-    //     ],
-    //   },
-    //   testnetName
-    // );
-    testnet = await harbor.testnet("sample-template-to-test");
+    testnet = await harbor.apply(
+      {
+        chains: [
+          {
+            chain: "ethereum",
+            config: {
+              artifactsPath: "./artifacts",
+              deploy: { scripts: "./deploy" },
+            },
+            wallets: [],
+            tag: "v1",
+          },
+        ],
+      },
+      testnetName
+    );
   }, 300000);
 
   // Fill in each of these tests!
@@ -61,7 +60,7 @@ describe("Sample test", () => {
     }
     expect(accountsCount).to.be.equal(3);
   }, 50000);
-  it("Check that the balances of both wallets and chains exist", async () => {
+  it("Check that the balances of both wallets and smart contract(s) exist", async () => {
     const chains = await testnet.chains();
     const accounts = await chains[0].accounts();
     for (let i = 0; i < accounts.length; i++) {
