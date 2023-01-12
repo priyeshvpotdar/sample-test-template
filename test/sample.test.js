@@ -1,17 +1,19 @@
 const Harbor = require("@harbor-xyz/harbor");
+function generateRandomTestnetName() {
+  return `testnet-${Math.floor(Math.random() * 1000)}`;
+}
 
 describe("Sample test", () => {
   // Variables we can access in every test
   let harbor;
   let testnet;
-  let testnetName = "sample-template-to-test";
+  const testnetName = generateRandomTestnetName();
 
   beforeAll(async () => {
     // Fill the Harbor object in with your keys!
     harbor = new Harbor({
       userKey: "",
       projectKey: "",
-      baseUrl: "https://develop-api.tech.goharbor.com",
     });
 
     // Authenticate below this line!

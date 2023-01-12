@@ -1,11 +1,14 @@
 const Harbor = require("@harbor-xyz/harbor");
 const { expect } = require("chai");
+function generateRandomTestnetName() {
+  return `testnet-${Math.floor(Math.random() * 1000)}`;
+}
 
 describe("Sample test", () => {
   // Variables we can access in every test
   let harbor;
   let testnet;
-  let testnetName = "sample-template-to-test";
+  const testnetName = generateRandomTestnetName();
 
   beforeAll(async () => {
     // Fill the Harbor object in with your keys!
