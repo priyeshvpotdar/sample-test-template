@@ -1,7 +1,7 @@
 const Harbor = require("@harbor-xyz/harbor");
 const { expect } = require("chai");
 function generateRandomTestnetName() {
-  return `testnet-${Math.floor(Math.random() * 1000)}`;
+  return `testnet-${Math.floor(Math.random() * 100000)}`;
 }
 
 describe("Sample test", () => {
