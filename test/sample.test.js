@@ -22,8 +22,8 @@ describe("Sample test", () => {
   });
 
   // Fill in each of these tests!
-  it("Check if the Testnet exists", async () => {});
-  it("Check that there is only one chain (Ethereum)", async () => {});
+  it("Check if the Testnet is running", async () => {});
+  it("Check that the Ethereum chain exists", async () => {});
   it("Check that there are only 3 wallets in your Ethereum chain", async () => {});
-  it("Check that the balances of both wallets and smart contract(s) exist", async () => {});
+  it("Check that the Ether balances of both wallets and smart contract(s) exist", async () => {});
 });

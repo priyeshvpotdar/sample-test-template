@@ -1,20 +1,28 @@
-const Harbor = require("@harbor-xyz/harbor");
+const Harbor = require("@beam-me-up/harbor");
 const { expect } = require("chai");
+const { ethers } = require("hardhat");
+
 function generateRandomTestnetName() {
   return `testnet-${Math.floor(Math.random() * 1000)}`;
 }
 
-describe("Sample test", () => {
+describe.only("Sample test", () => {
   // Variables we can access in every test
   let harbor;
   let testnet;
+  let chains;
+  let accounts;
+  let ethereum;
+  let provider;
+  let greeterContract;
+
   const testnetName = generateRandomTestnetName();
 
   beforeAll(async () => {
     // Fill the Harbor object in with your keys!
     harbor = new Harbor({
-      userKey: "",
-      projectKey: "",
+      userKey: "fZCGChu79xpkCMgQYGSDM8",
+      projectKey: "k3XjM2oSGf49tuyqTDE7yi",
     });
 
     // Authenticate below this line!
@@ -22,61 +30,46 @@ describe("Sample test", () => {
     console.log(
       "Deploying your contracts ... This may take a few minutes. Please stand by."
     );
-    // Apply your configuration below this line!
-    testnet = await harbor.apply(
-      {
-        chains: [
-          {
-            chain: "ethereum",
-            config: {
-              artifactsPath: "./artifacts",
-              deploy: { scripts: "./deploy" },
-            },
-            wallets: [],
-            tag: "v1",
-          },
-        ],
-      },
-      testnetName
-    );
+
+    testnet = await harbor.testnet("venice-rooftops");
+    chains = await testnet.chains();
+    ethereum = chains[0];
+    accounts = await ethereum.accounts();
+    provider = ethers.getDefaultProvider(ethereum.endpoint);
+    for (i = 0; i < accounts.length; i++) {
+      if (accounts[i].type == "contract") {
+        if (accounts[i].name == "Greeter") {
+          greeterContract = new ethers.Contract(
+            accounts[i].address,
+            accounts[i].abi,
+            provider.getSigner(0)
+          );
+        }
+      }
+    }
   }, 300000);
 
   // Fill in each of these tests!
   it("Check if the Testnet is running", async () => {
     expect(testnet.status).to.be.equal("RUNNING");
   });
-  it("Check that there is only one chain (Ethereum)", async () => {
-    const chains = await testnet.chains();
-    expect(chains.length).to.be.equal(1);
-    let ethereumChain;
-    for (let i = 0; i < chains.length; i++) {
-      if (chains[i].chain == "ethereum") {
-        ethereumChain = chains[i];
-      }
-    }
-    expect(ethereumChain.chain).to.be.equal("ethereum");
+  it("Check that the Ethereum chain exists", async () => {
+    const ethereum = testnet.ethereum;
+    expect(ethereum.chain).to.be.equal("ethereum");
   });
   it("Check that there are only 3 wallets in your Ethereum chain", async () => {
-    const chains = await testnet.chains();
-    const accounts = await chains[0].accounts();
-    let accountsCount = 0;
-    for (let i = 0; i < accounts.length; i++) {
-      if (accounts[i].type === "wallet") accountsCount++;
-    }
-    expect(accountsCount).to.be.equal(3);
+    const ethereum = testnet.ethereum;
+    expect(ethereum.wallets().length).to.be.equal(3);
   }, 50000);
-  it("Check that the balances of both wallets and smart contract(s) exist", async () => {
-    const chains = await testnet.chains();
-    const accounts = await chains[0].accounts();
-    for (let i = 0; i < accounts.length; i++) {
-      console.log("Account #:", i + 1);
-      console.log("Type of account: ", accounts[i].type);
-      console.log("Address: ", accounts[i].address);
-      for (let j = 0; j < accounts[i].balances.length; j++) {
-        console.log("Symbol: ", accounts[i].balances[j].symbol);
-        expect(accounts[i].balances[j].amount).to.exist;
-        console.log("Balance: ", accounts[i].balances[j].amount);
-      }
+  it("Check that the Ether balances of both wallets and smart contract(s) exist", async () => {
+    const ethereum = testnet.ethereum;
+    const wallets = await ethereum.wallets();
+    const smartContracts = await ethereum.contracts();
+    for (let i = 0; i < wallets.length; i++) {
+      expect(wallets[i].balances["ETH"].to.exist);
+    }
+    for (let i = 0; i < smartContracts.length; i++) {
+      expect(smartContracts[i].balances["ETH"].to.exist);
     }
   });
 });
