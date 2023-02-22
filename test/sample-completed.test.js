@@ -1,4 +1,4 @@
-const Harbor = require("@beam-me-up/harbor");
+const Harbor = require("@harbor-xyz/harbor");
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
@@ -21,8 +21,8 @@ describe.only("Sample test", () => {
   beforeAll(async () => {
     // Fill the Harbor object in with your keys!
     harbor = new Harbor({
-      userKey: "fZCGChu79xpkCMgQYGSDM8",
-      projectKey: "k3XjM2oSGf49tuyqTDE7yi",
+      userKey: "",
+      projectKey: "",
     });
 
     // Authenticate below this line!
@@ -48,24 +48,11 @@ describe.only("Sample test", () => {
       },
       testnetName
     );
-    chains = await testnet.chains();
-    ethereum = chains[0];
-    accounts = await ethereum.accounts();
+    ethereum = testnet.ethereum;
+    contracts = await ethereum.contracts();
     provider = ethers.getDefaultProvider(ethereum.endpoint);
-    for (i = 0; i < accounts.length; i++) {
-      if (accounts[i].type == "contract") {
-        if (accounts[i].name == "Greeter") {
-          greeterContract = new ethers.Contract(
-            accounts[i].address,
-            accounts[i].abi,
-            provider.getSigner(0)
-          );
-        }
-      }
-    }
+    greeterContract = contracts["Greeter"];
   }, 300000);
-
-  // Fill in each of these tests!
   it("Check if the Testnet is running", async () => {
     expect(testnet.status).to.be.equal("RUNNING");
   });
@@ -81,13 +68,10 @@ describe.only("Sample test", () => {
   it("Check that the Ether balances of both wallets and smart contract(s) exist", async () => {
     const ethereum = testnet.ethereum;
     const wallets = await ethereum.wallets();
-    const smartContracts = await ethereum.contracts();
     for (let i = 0; i < wallets.length; i++) {
-      expect(wallets[i].balances["ETH"].to.exist);
+      expect(wallets[i].balances["ETH"]).to.exist;
     }
-    for (let i = 0; i < smartContracts.length; i++) {
-      const balances = await smartContracts[i].balances();
-      expect(balances["ETH"].to.exist);
-    }
+    const balances = await greeterContract.balances();
+    expect(balances["ETH"]).to.exist;
   });
 });
