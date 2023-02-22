@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 function generateRandomTestnetName() {
-  return `testnet-${Math.floor(Math.random() * 1000)}`;
+  return `testnet-${Math.floor(Math.random() * 100000)}`;
 }
 
 describe.only("Sample test", () => {
