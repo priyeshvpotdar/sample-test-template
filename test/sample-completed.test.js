@@ -10,8 +10,6 @@ describe.only("Sample test", () => {
   // Variables we can access in every test
   let harbor;
   let testnet;
-  let chains;
-  let accounts;
   let ethereum;
   let provider;
   let greeterContract;
