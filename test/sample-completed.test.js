@@ -31,7 +31,23 @@ describe.only("Sample test", () => {
       "Deploying your contracts ... This may take a few minutes. Please stand by."
     );
 
-    testnet = await harbor.testnet("venice-rooftops");
+    testnet = await harbor.apply(
+      {
+        chains: [
+          {
+            chain: "ethereum",
+            config: {
+              artifactsPath: "./artifacts",
+              deploy: {
+                scripts: "./deploy",
+              },
+            },
+            tag: "v1",
+          },
+        ],
+      },
+      testnetName
+    );
     chains = await testnet.chains();
     ethereum = chains[0];
     accounts = await ethereum.accounts();
@@ -59,7 +75,8 @@ describe.only("Sample test", () => {
   });
   it("Check that there are only 3 wallets in your Ethereum chain", async () => {
     const ethereum = testnet.ethereum;
-    expect(ethereum.wallets().length).to.be.equal(3);
+    const wallets = await ethereum.wallets();
+    expect(wallets.length).to.be.equal(3);
   }, 50000);
   it("Check that the Ether balances of both wallets and smart contract(s) exist", async () => {
     const ethereum = testnet.ethereum;
@@ -69,7 +86,8 @@ describe.only("Sample test", () => {
       expect(wallets[i].balances["ETH"].to.exist);
     }
     for (let i = 0; i < smartContracts.length; i++) {
-      expect(smartContracts[i].balances["ETH"].to.exist);
+      const balances = await smartContracts[i].balances();
+      expect(balances["ETH"].to.exist);
     }
   });
 });
