@@ -1,0 +1,62 @@
+# This is a basic workflow that is manually triggered
+
+name: Harbor Testnet Setup (Pull Request to master)
+
+# Controls when the action will run. The Workflow runs when manually triggered using the UI
+# or API.
+on:
+  pull_request:
+    branches: [master]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains all the jobs to start a testnet
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up homebrew
+        uses: "Homebrew/actions/setup-homebrew@master"
+
+      - name: Update Homebrew
+        run: brew update
+
+      - name: Install Harbor CLI
+        run: brew tap harbor-xyz/homebrew-harbor && brew install harbor
+
+      - name: Install hardhat and other dependencies
+        run: yarn install
+
+      - name: Compile Code
+        run: npx hardhat compile
+
+      - name: Configure Harbor
+        run: harbor configure keys --user-key ${{secrets.HARBOR_USER_KEY}} --project-key ${{secrets.HARBOR_PROJECT_KEY}}
+
+      # - name: Initialize Harbor
+      #   run: harbor init
+
+      - name: Build and Run Testnet
+        run: harbor apply ${{ github.sha }}
+
+      - name: Describe testnet
+        id: testnet-data
+        run: |
+          TDATA=$( harbor describe testnet --name ${{ github.sha }} --output json | sed '1d' )
+          TDATA="${TDATA//'%'/''}"
+          TDATA="${TDATA//$'\n'/''}"
+          TDATA="${TDATA//$'\r'/''}"
+          echo "TDATA=$TDATA" >> $GITHUB_OUTPUT
+      - name: Echo testnet details
+        run: echo ${{ steps.testnet-data.outputs.TDATA }}
+
+      - name: Echo testnet name
+        run: echo "${{fromJson(steps.testnet-data.outputs.TDATA).name}}"
+
+      - name: Kill Testnet
+        run: harbor kill testnet --name ${{ github.sha }}
